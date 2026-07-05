@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>KYRO WHEEL</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="bg"></div>
+
+  <main class="app">
+    <aside class="panel left">
+      <div class="brand">
+        <div class="logo">KYRO</div>
+        <div class="sub">WHEEL</div>
+      </div>
+
+      <button id="spinBtn" class="main-btn">🎡 GIRAR RUEDA</button>
+
+      <div class="level-card">
+        <span>NIVEL ACTUAL</span>
+        <strong id="levelText">1</strong>
+        <p>Comienza el caos</p>
+        <div class="progress">
+          <div id="progressBar"></div>
+        </div>
+        <small><span id="countText">0</span> / 10 Lucky Blocks</small>
+      </div>
+
+      <button id="resetBtn" class="secondary-btn">Reiniciar</button>
+    </aside>
+
+    <section class="wheel-zone">
+      <h1>KYRO WHEEL</h1>
+      <div class="pointer"></div>
+      <canvas id="wheel" width="760" height="760"></canvas>
+      <button id="centerSpin" class="spin-center">SPIN</button>
+      <div id="result" class="result">Abrí un Lucky Block y girá la rueda...</div>
+    </section>
+
+    <aside class="panel right">
+      <div class="box">
+        <h2>CATEGORÍAS</h2>
+        <p><span class="dot suerte"></span> Suerte</p>
+        <p><span class="dot desafio"></span> Desafío</p>
+        <p><span class="dot caos"></span> Caos</p>
+        <p><span class="dot pesadilla"></span> Pesadilla</p>
+      </div>
+
+      <div class="box">
+        <h2>INFORMACIÓN</h2>
+        <p>Cada Lucky Block que abras te obliga a girar la rueda.</p>
+        <b>¡Aceptá tu destino!</b>
+      </div>
+
+      <div class="box history">
+        <h2>HISTORIAL</h2>
+        <ul id="history"></ul>
+      </div>
+    </aside>
+  </main>
+
+  <div id="flash"></div>
+
+  <script src="script.js"></script>
+</body>
+</html>
