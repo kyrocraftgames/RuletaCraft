@@ -22,22 +22,28 @@ const modalCategory = document.getElementById("modalCategory");
 const flash = document.getElementById("flash");
 
 const segments = [
-  { title: "Diamantes x16", icon: "💎", category: "SUERTE", type: "good", color: "#0f9c42" },
-  { title: "+2 Corazones", icon: "💚", category: "SUERTE", type: "good", color: "#18b645" },
-  { title: "Manzana Dorada", icon: "🍏", category: "SUERTE", type: "good", color: "#13983d" },
+  // SUERTE - más chances de que la partida siga viva
+  { title: "Diamantes x8", icon: "💎", category: "SUERTE", type: "good", color: "#0f9c42", weight: 10 },
+  { title: "+2 Corazones", icon: "💚", category: "SUERTE", type: "good", color: "#18b645", weight: 10 },
+  { title: "Manzana Dorada", icon: "🍏", category: "SUERTE", type: "good", color: "#13983d", weight: 9 },
+  { title: "Encantamiento", icon: "✨", category: "SUERTE", type: "good", color: "#1fa86a", weight: 8 },
 
-  { title: "Nada pasa nada", icon: "🙂", category: "DESAFÍO", type: "neutral", color: "#8a7300" },
-  { title: "Sin comida 5 min", icon: "🍖", category: "DESAFÍO", type: "bad", color: "#a05a00" },
-  { title: "No podés correr", icon: "🏃", category: "DESAFÍO", type: "bad", color: "#a54600" },
+  // DESAFÍO - molesta, pero no destruye la partida
+  { title: "Nada pasa nada", icon: "🙂", category: "DESAFÍO", type: "neutral", color: "#8a7300", weight: 10 },
+  { title: "Sin comida 3 min", icon: "🍖", category: "DESAFÍO", type: "bad", color: "#a05a00", weight: 8 },
+  { title: "No podés correr 2 min", icon: "🏃", category: "DESAFÍO", type: "bad", color: "#a54600", weight: 8 },
+  { title: "Soltá un item", icon: "📦", category: "DESAFÍO", type: "bad", color: "#9b6200", weight: 7 },
 
-  { title: "Mobs más rápidos", icon: "⚡", category: "CAOS", type: "bad", color: "#b82813" },
-  { title: "Explosiones", icon: "💥", category: "CAOS", type: "bad", color: "#c10e14" },
-  { title: "TNT debajo tuyo", icon: "🧨", category: "CAOS", type: "bad", color: "#a20a18" },
-  { title: "Lluvia de flechas", icon: "🏹", category: "CAOS", type: "bad", color: "#8b0a28" },
+  // CAOS - menos probabilidad, pero sigue siendo peligroso
+  { title: "Mobs más rápidos", icon: "⚡", category: "CAOS", type: "bad", color: "#b82813", weight: 5 },
+  { title: "Mini explosiones", icon: "💥", category: "CAOS", type: "bad", color: "#c10e14", weight: 4 },
+  { title: "TNT cerca tuyo", icon: "🧨", category: "CAOS", type: "bad", color: "#a20a18", weight: 3 },
+  { title: "Lluvia de flechas", icon: "🏹", category: "CAOS", type: "bad", color: "#8b0a28", weight: 3 },
 
-  { title: "Solo 1 corazón", icon: "💔", category: "PESADILLA", type: "bad", color: "#5b0f78" },
-  { title: "Invoca un Warden", icon: "👁️", category: "PESADILLA", type: "bad", color: "#48118d" },
-  { title: "Invoca un Wither", icon: "☠️", category: "PESADILLA", type: "bad", color: "#35105f" }
+  // PESADILLA - muy raro, para momentos épicos
+  { title: "Solo 1 corazón", icon: "💔", category: "PESADILLA", type: "bad", color: "#5b0f78", weight: 2 },
+  { title: "Invoca un Warden", icon: "👁️", category: "PESADILLA", type: "bad", color: "#48118d", weight: 1 },
+  { title: "Invoca un Wither", icon: "☠️", category: "PESADILLA", type: "bad", color: "#35105f", weight: 1 }
 ];
 
 let rotation = 0;
@@ -148,6 +154,17 @@ function drawWheel() {
   ctx.restore();
 }
 
+
+function weightedRandomSegment() {
+  const total = segments.reduce((sum, s) => sum + (s.weight || 1), 0);
+  let roll = Math.random() * total;
+  for (let i = 0; i < segments.length; i++) {
+    roll -= segments[i].weight || 1;
+    if (roll <= 0) return i;
+  }
+  return segments.length - 1;
+}
+
 function getSegmentAtPointer() {
   const segAngle = TAU / segments.length;
   // Converts pointer world angle into wheel local angle.
@@ -163,7 +180,7 @@ function spin() {
   resultText.textContent = "GIRANDO...";
   hideModal();
 
-  const selected = Math.floor(Math.random() * segments.length);
+  const selected = weightedRandomSegment();
   const segAngle = TAU / segments.length;
   const selectedCenter = selected * segAngle + segAngle / 2;
 
@@ -176,7 +193,7 @@ function spin() {
   const spins = TAU * (6 + Math.floor(Math.random() * 3));
   const startRotation = rotation;
   const finalRotation = rotation + spins + delta;
-  const duration = 5200;
+  const duration = 4300;
   const startTime = performance.now();
   lastTickSegment = getSegmentAtPointer();
 
