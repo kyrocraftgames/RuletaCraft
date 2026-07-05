@@ -3,65 +3,96 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>KYRO WHEEL</title>
+  <title>RuletaCraft V2</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div class="bg"></div>
+  <div class="background"></div>
+  <div class="scanlines"></div>
 
-  <main class="app">
-    <aside class="panel left">
+  <main class="layout">
+    <aside class="side left">
       <div class="brand">
-        <div class="logo">KYRO</div>
-        <div class="sub">WHEEL</div>
+        <div class="brand-main">KYRO</div>
+        <div class="brand-sub">RULETACRAFT</div>
       </div>
 
-      <button id="spinBtn" class="main-btn">🎡 GIRAR RUEDA</button>
+      <button id="spinButton" class="primary">🎡 GIRAR RULETA</button>
+      <button id="obsButton" class="secondary">📺 MODO OBS</button>
+      <button id="resetButton" class="secondary">↺ REINICIAR</button>
 
-      <div class="level-card">
-        <span>NIVEL ACTUAL</span>
-        <strong id="levelText">1</strong>
-        <p>Comienza el caos</p>
-        <div class="progress">
-          <div id="progressBar"></div>
-        </div>
-        <small><span id="countText">0</span> / 10 Lucky Blocks</small>
+      <div class="card level-card">
+        <p>NIVEL ACTUAL</p>
+        <strong id="level">1</strong>
+        <span id="levelName">CONTROLADO</span>
+        <div class="bar"><div id="progress"></div></div>
+        <small><b id="count">0</b> / 10 Lucky Blocks</small>
       </div>
 
-      <button id="resetBtn" class="secondary-btn">Reiniciar</button>
+      <div class="card rules">
+        <h3>REGLA</h3>
+        <p>Cada Lucky Block abierto obliga a girar la ruleta.</p>
+        <p>El resultado se cumple sí o sí.</p>
+      </div>
     </aside>
 
-    <section class="wheel-zone">
-      <h1>KYRO WHEEL</h1>
-      <div class="pointer"></div>
-      <canvas id="wheel" width="760" height="760"></canvas>
-      <button id="centerSpin" class="spin-center">SPIN</button>
-      <div id="result" class="result">Abrí un Lucky Block y girá la rueda...</div>
+    <section class="stage">
+      <div class="topline">
+        <span></span>
+        <h1>KYRO WHEEL</h1>
+        <span></span>
+      </div>
+
+      <div class="wheel-wrap">
+        <div class="pointer"></div>
+        <canvas id="wheel" width="900" height="900"></canvas>
+        <button id="centerButton" class="center-button">
+          <b>SPIN</b>
+          <small>ACEPTÁ TU DESTINO</small>
+        </button>
+      </div>
+
+      <div id="resultBar" class="result-bar">
+        <span id="resultIcon">🎲</span>
+        <b id="resultText">ABRÍ UN LUCKY BLOCK Y GIRÁ LA RULETA</b>
+      </div>
     </section>
 
-    <aside class="panel right">
-      <div class="box">
-        <h2>CATEGORÍAS</h2>
-        <p><span class="dot suerte"></span> Suerte</p>
-        <p><span class="dot desafio"></span> Desafío</p>
-        <p><span class="dot caos"></span> Caos</p>
-        <p><span class="dot pesadilla"></span> Pesadilla</p>
+    <aside class="side right">
+      <div class="card">
+        <h3>CATEGORÍAS</h3>
+        <div class="cat"><span class="dot good"></span><b>SUERTE</b><em>25%</em></div>
+        <div class="cat"><span class="dot challenge"></span><b>DESAFÍO</b><em>25%</em></div>
+        <div class="cat"><span class="dot chaos"></span><b>CAOS</b><em>30%</em></div>
+        <div class="cat"><span class="dot nightmare"></span><b>PESADILLA</b><em>20%</em></div>
       </div>
 
-      <div class="box">
-        <h2>INFORMACIÓN</h2>
-        <p>Cada Lucky Block que abras te obliga a girar la rueda.</p>
-        <b>¡Aceptá tu destino!</b>
+      <div class="card">
+        <h3>ATAJOS</h3>
+        <p><b>Espacio:</b> girar</p>
+        <p><b>O:</b> modo OBS</p>
+        <p><b>R:</b> reiniciar</p>
       </div>
 
-      <div class="box history">
-        <h2>HISTORIAL</h2>
+      <div class="card history-card">
+        <h3>HISTORIAL</h3>
         <ul id="history"></ul>
       </div>
     </aside>
   </main>
 
+  <div id="modal" class="modal">
+    <div class="modal-box">
+      <div id="modalIcon" class="modal-icon">💀</div>
+      <div id="modalTitle" class="modal-title">RESULTADO</div>
+      <div id="modalCategory" class="modal-category">CAOS</div>
+    </div>
+  </div>
+
   <div id="flash"></div>
+
+  <audio id="tickSound" preload="auto"></audio>
+  <audio id="hitSound" preload="auto"></audio>
 
   <script src="script.js"></script>
 </body>
